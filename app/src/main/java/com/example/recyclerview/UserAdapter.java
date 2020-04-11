@@ -1,6 +1,7 @@
 package com.example.recyclerview;
 
 import android.media.Image;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,22 +25,34 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder
             notifyDataSetChanged();
         }
     }
+    public void  addItem (User user){
+        if (user != null){
+            mArrayUsers.add(user);
+            notifyDataSetChanged();
+        }
+    }
 
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.item_layout_user, null , false);
+        return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        User user = mArrayUsers.get(position);
+        holder.mImage.setImageResource(user.getImage());
+        holder.mTvName.setText(user.getName());
+        holder.mTvAge.setText(String.valueOf(user.getAge()));
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mArrayUsers.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
